@@ -2,6 +2,7 @@ package com.appsdeveloperblog.app.ws.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.appsdeveloperblog.app.ws.UserRepository;
@@ -20,6 +21,9 @@ public class UserServiceImplementation implements UserService {
 	@Autowired
 	Utils utils;
 	
+	@Autowired
+	BCryptPasswordEncoder bCrpBCryptPasswordEncoder;
+	
 	//test comment
 	@Override
 	public UserDto createUser(UserDto user) {
@@ -33,7 +37,7 @@ public class UserServiceImplementation implements UserService {
 		
 		String publicUserId = utils.generateUserId(30);
 		userEntity.setUserId(publicUserId);
-		userEntity.setEncryptedPassword("test");
+		userEntity.setEncryptedPassword(bCrpBCryptPasswordEncoder.encode(user.getPassword()));
 		userEntity.setEmailVerificationStatus(false);
 		
 		UserEntity storedUserDetails = userRepository.save(userEntity);
