@@ -16,5 +16,11 @@ public class DemoWsApplication {
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	@Bean
+	public SpringApplicationContext applicationContext() 
+	{
+		return new SpringApplicationContext();
+	}
 
 }
